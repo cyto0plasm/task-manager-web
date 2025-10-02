@@ -66,11 +66,11 @@
         <div x-show="taskOpen" x-transition:enter="transition ease-out duration-200"
             x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
             x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-95"
-            class="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-hidden" @click.stop>
+            x-transition:leave-end="opacity-0 scale-95" class="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full"
+            @click.stop>
             {{-- Header --}}
             <div
-                class="sticky top-0 bg-gradient-to-r from-[#6b3eea] to-[#8b5cf6] text-white px-6 py-5 flex items-center justify-between">
+                class="sticky top-0 bg-gradient-to-r from-[#6b3eea] to-[#8b5cf6] text-white px-6 py-4 flex items-center justify-between">
                 <h2 class="text-2xl font-bold">Create New Task</h2>
                 <button @click="taskOpen = false"
                     class="text-white/80 hover:text-white hover:bg-white/20 rounded-lg p-1.5 transition-all">
@@ -83,8 +83,9 @@
             </div>
 
             {{-- Form --}}
-            <div class="overflow-y-auto max-h-[calc(85vh-80px)]">
+            <div class="px-6 py-6">
                 <form action="{{ $taskAction }}" method="POST" class="p-6 space-y-5">
+                    @method('PUT')
                     @csrf
 
                     <div>
@@ -120,19 +121,23 @@
 
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
-                            <select name="state"
+                            <select name="status"
                                 class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#6b3eea] focus:border-transparent transition-all">
                                 <option value="">Select</option>
-                                <option value="todo">📋 To Do</option>
-                                <option value="in_progress">⚡ In Progress</option>
-                                <option value="done">✅ Done</option>
+                                <option value="pending" class="text-red-500">⬤ Pending</option>
+                                <option value="in_progress" class="text-orange-500">◉ In Progress</option>
+                                <option value="done" class="text-green-500">✓ Done</option>
                             </select>
+                            <div>
+
+                            </div>
+
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Project</label>
-                        <select name="project"
+                        <select name="project_id"
                             class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#6b3eea] focus:border-transparent transition-all">
                             <option value="">Select Project</option>
                             {{-- Add your projects dynamically --}}

@@ -3,7 +3,7 @@
 
 @section('main')
     create task
-    <form action="">
+    {{-- <form action="">
         <x-input name="Title" placeholder="Task Title"></x-input>
         <x-input name="description" placeholder="Task description"></x-input>
         <input type="date" name="due_date" id="">
@@ -12,8 +12,8 @@
         <select name="project" id=""></select>
 
         <x-button text="Create Task" type="submit" />
-        <x-task-model />
 
-    </form>
+    </form> --}}
+    <x-task-model />
 
 @endsection

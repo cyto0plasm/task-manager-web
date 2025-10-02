@@ -32,11 +32,11 @@ Route::prefix('projects')->group(function () {
 
     Route::get('/view', [ProjectController::class, 'view'])->name('projects.view');
 });
-Route::prefix('tasks')->group(function () {
+Route::prefix('tasks')->middleware('auth')->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
     Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
-    Route::post('/store', [TaskController::class, 'store'])->name('tasks.store');
-    Route::post('/show', [TaskController::class, 'show'])->name('tasks.show');
+    Route::put('/store', [TaskController::class, 'store'])->name('tasks.store');
+    Route::get('/show/{id}', [TaskController::class, 'show'])->name('tasks.show');
     Route::get('/update/{id}', [TaskController::class, 'update'])->name('tasks.update');
     Route::patch('/edit/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::delete('/delete/{id}', [TaskController::class, 'delete'])->name('tasks.delete');
