@@ -14,7 +14,9 @@ class TaskController extends Controller
      */
     public function index():View
     {
-        $tasks=Task::all();
+        // $tasks=Task::all();
+        $tasks = Task::orderBy('position')->get();
+
         return view('Task.tasksIndex',[
             'tasks'=>$tasks
         ]);
@@ -86,6 +88,19 @@ class TaskController extends Controller
     }
     public function view():View
     {
-        return view('Task.taskView');
+$tasks = Task::orderBy('position')->get();
+        return view('Task.taskView',[
+            'tasks'=>$tasks
+        ]);
     }
+    public function reorder(Request $request)
+{
+    foreach ($request->order as $item) {
+        \App\Models\Task::where('id', $item['id'])
+            ->update(['position' => $item['position']]);
+    }
+
+    return response()->json(['status' => 'success']);
+}
+
 }

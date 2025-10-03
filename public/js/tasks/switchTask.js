@@ -12,6 +12,12 @@ document.querySelectorAll(".task-item").forEach((button) => {
             })
             .then((task) => {
                 //console.log("Task data:", task);
+                const dueDate = new Date(task.due_date);
+                const now = new Date();
+
+                const formattedDueDate = dueDate.toISOString().split("T")[0];
+                document.querySelector(".task-time").innerText =
+                    formattedDueDate;
 
                 // Update text content
                 document.querySelector(".task-title").innerText = task.title;
@@ -19,10 +25,8 @@ document.querySelectorAll(".task-item").forEach((button) => {
                     task.description;
                 document.querySelector(".task-priority").innerText =
                     task.priority;
-                document.querySelector(".task-time").innerText =
-                    task.estimated_time;
-                document.querySelector(".task-assigned").innerText =
-                    task.assigned_to;
+                // document.querySelector(".task-time").innerText = task.due_date;
+                document.querySelector(".task-type").innerText = task.type;
 
                 // Update status badge and icon
                 const statusBadge = document.querySelector(".task-state");

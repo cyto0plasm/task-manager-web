@@ -23,6 +23,9 @@ return new class extends Migration
             $table->unsignedBigInteger('project_id')->nullable(); // optional: task may exist outside project
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+
+                    $table->integer('position')->default(0);
+
             $table->timestamps();   
         });
     }

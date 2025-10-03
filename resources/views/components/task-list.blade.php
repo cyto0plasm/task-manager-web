@@ -20,12 +20,20 @@
         </div>
     </div>
 
-    <ul class="p-0 max-h-[70vh] overflow-y-auto">
+    <ul id="sortable-list" data-url="{{ route('tasks.reorder') }}" data-csrf="{{ csrf_token() }}"
+        class="p-0 max-h-[70vh] overflow-y-auto">
+
         @foreach ($tasks as $task)
             <x-task-button :state="$task->status" :title="$task->title" :task-id="$task->id" :url="route('tasks.show', $task->id)" />
+            {{-- <li class="p-2 bg-gray-200 rounded cursor-move" data-id="{{ $task->id }}">
+                {{ $task->title }} --}}
+            </li>
         @endforeach
-
     </ul>
+
+
 </div>
 
 <script src="{{ asset('js/tasks/switchTask.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="{{ asset('js/tasks/sortableTasks.js') }}"></script>

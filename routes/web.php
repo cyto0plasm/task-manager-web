@@ -42,6 +42,8 @@ Route::prefix('tasks')->middleware('auth')->group(function () {
     Route::delete('/delete/{id}', [TaskController::class, 'delete'])->name('tasks.delete');
     
     Route::get('/view', [TaskController::class, 'view'])->name('tasks.view');
+    Route::post('/reorder', [TaskController::class, 'reorder'])->name('tasks.reorder');
+
 });
 
 require __DIR__.'/auth.php';

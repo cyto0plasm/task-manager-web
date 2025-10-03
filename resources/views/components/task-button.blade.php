@@ -1,7 +1,11 @@
 @props(['state', 'title' => 'Website Redesign Project', 'url' => '#', 'taskId' => null])
 
-<a href="{{ $url }}" data-task-url="{{ $url }}" data-task-id="{{ $taskId }}"
-    class="task-item block border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer">
+<li
+    {{ $attributes->merge([
+        'data-id' => $taskId,
+        'data-task-url' => $url,
+        'class' => 'task-item block border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-move',
+    ]) }}>
     <div class="flex items-center gap-3 px-6 py-4">
         <!-- Status Icon -->
         <div class="flex-shrink-0">
@@ -34,4 +38,4 @@
             </p>
         </div>
     </div>
-</a>
+</li>
