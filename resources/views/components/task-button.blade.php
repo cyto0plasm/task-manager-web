@@ -1,4 +1,4 @@
-@props(['state', 'title' => 'Website Redesign Project', 'url' => '#', 'taskId' => null])
+@props(['state', 'title' => 'no title', 'url' => '#', 'taskId' => null])
 
 <li
     {{ $attributes->merge([
@@ -18,18 +18,15 @@
                     </svg>
                 </div>
             @elseif ($state === 'in_progress')
-                <div class="w-4 h-4 bg-yellow-500 rounded-full flex items-center justify-center">
-                    <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                </div>
+                <x-svg.pending></x-svg.pending>
             @else
-                <div class="w-4 h-4 bg-red-500 rounded-full"></div>
+                <x-svg.pending></x-svg.pending>
             @endif
         </div>
 
         <!-- Task Info -->
         <div class="flex-1 min-w-0">
-            <p
-                class="text-lg truncate {{ $state === 'done' ? 'text-gray-600 line-through' : 'text-gray-800 font-medium' }}">
+            <p class="text-lg truncate {{ $state === 'done' ? 'text-gray-600' : 'text-gray-800 font-medium' }}">
                 {{ $title }}
             </p>
             <p
@@ -37,5 +34,21 @@
                 {{ $state === 'in_progress' ? 'In Progress' : ucfirst($state) }}
             </p>
         </div>
+
+        <div class=" shadow-sm p-2 bg-transparent ">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+                <defs>
+                    <linearGradient id="grayGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6B7280" />
+                        <stop offset="50%" stop-color="#9CA3AF" />
+                        <stop offset="100%" stop-color="#D1D5DB" />
+                    </linearGradient>
+                </defs>
+                <!-- Main X -->
+                <path d="M18 6L6 18M6 6L18 18" fill="none" stroke="#9CA3AF" stroke-width="2"
+                    stroke-linecap="round" />
+            </svg>
+        </div>
     </div>
+
 </li>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -15,10 +16,24 @@ class TaskController extends Controller
     public function index():View
     {
         // $tasks=Task::all();
-        $tasks = Task::orderBy('position')->get();
+         $tasks = Task::with('project')->orderBy('position')->get();
+        $projects = Project::all();
 
+        $firstTask =$tasks->first();
+
+        $taskStatusDoneCount=$tasks->where('status','done')->count();
+        $taskStatusProgressCount=$tasks->where('status','in_progress')->count();
+        $taskStatusPendingCount=$tasks->where('status','pending')->count();
+       
+       
         return view('Task.tasksIndex',[
-            'tasks'=>$tasks
+            'tasks'=>$tasks,
+            'firstTask'=>$firstTask ,
+            'projects'=>$projects,
+            'taskStatusDoneCount'=>$taskStatusDoneCount,
+            'taskStatusProgressCount'=>$taskStatusProgressCount,
+            'taskStatusPendingCount'=>$taskStatusPendingCount
+
         ]);
     }
 
@@ -59,16 +74,22 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        $tasks=Task::find($id);
-        return response()->json($tasks);
+       $task = Task::with('project')->find($id);
+
+    if ($task && $task->project) {
+        $task->project_name = $task->project->name; // Add convenience field
+    }
+        return response()->json($task);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id):View
+    public function edit(string $id)
     {
-        return view('Task.tasksEdit');
+        $task=Task::findOrFail($id);
+
+        return response()->json($task);
     }
 
     /**
@@ -76,8 +97,38 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $validated = $request->validate([
+        'title'       => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'due_date'    => 'nullable|date',
+        'priority'    => 'required|in:low,medium,high',
+        'status'      => 'required|in:pending,in_progress,done',
+        'project_id'  => 'nullable|exists:projects,id',
+    ]);
+    $task=Task::findOrFail($id);
+            $task->update($validated);
+return redirect()->back();
+
     }
+public function updateStatus($id, Request $request)
+{
+    $task = Task::find($id);
+
+    if (!$task) {
+        return response()->json(['success' => false, 'message' => 'Task not found.']);
+    }
+
+    if ($task->status === 'done') {
+        return response()->json(['success' => false, 'message' => 'This task is already marked as done.']);
+    }
+
+    $task->status = $request->input('status', 'done');
+    $task->save();
+
+    return response()->json(['success' => true, 'message' => 'Task marked as complete.']);
+}
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -88,9 +139,11 @@ class TaskController extends Controller
     }
     public function view():View
     {
+        
 $tasks = Task::orderBy('position')->get();
         return view('Task.taskView',[
-            'tasks'=>$tasks
+            'tasks'=>$tasks,
+            
         ]);
     }
     public function reorder(Request $request)

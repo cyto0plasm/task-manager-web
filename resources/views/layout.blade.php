@@ -10,7 +10,7 @@
 </head>
 
 <body
-    class="bg-gray-50 font-sans text-slate-700 w-[90%] mx-auto h-screen border-l-1 border-gray-400 relative after:content[''] after:absolute after:top-[50%] after:left-0 after:w-[2px] after:h-[30px] after:bg-gradient-to-r after:from-violet-600 after:to-indigo-600">
+    class="bg-gray-50 font-sans text-slate-700 overflow-x-hidden mx-auto h-screen border-l-1 border-gray-400 relative after:content[''] after:absolute after:top-[50%] after:left-0 after:w-[2px] after:h-[30px] after:bg-gradient-to-r after:from-violet-600 after:to-indigo-600">
 
     <!-- Gray Overlay for Mobile Search -->
     <div id="searchOverlay" class="hidden fixed inset-0 bg-black/30 z-10 transition-opacity duration-300  opacity-0">
@@ -246,6 +246,7 @@
         </div>
     </nav>
 
+
     @yield('main')
 
     <footer class="w-full bg-white border-t border-gray-100 mt-12">
@@ -308,7 +309,31 @@
         </div>
     </footer>
 
+    <style>
+        ::-webkit-scrollbar {
+            width: 12px;
+            /* scrollbar width */
+        }
 
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            /* track color */
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #9ca3af;
+            /* thumb color (gray-400 from Tailwind) */
+            border-radius: 10px;
+            border: 2px solid #f1f1f1;
+            /* adds space around thumb */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #4b5563;
+            /* darker on hover (gray-600) */
+        }
+    </style>
     <script src="{{ asset('js/nav_Helper.js') }}"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 

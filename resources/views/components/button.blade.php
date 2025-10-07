@@ -5,12 +5,17 @@
     'hoverColor' => 'hover:bg-[#6935f7]',
     'activeColor' => 'active:bg-[#6335e0]',
     'textColor' => 'text-white',
+    'hoverText' => 'hover:text-gray-800',
+    'activeText' => 'active:text-gray-800',
 ])
 
 <button type="{{ $type }}"
-    {{ $attributes->merge(['class' => "$bgColor $textColor $hoverColor $activeColor font-semibold text-[1.2rem] px-3 py-1 rounded-lg active:scale-[1.01] shadow-md active:shadow-lg transition-all duration-150"]) }}>
+    {{ $attributes->merge([
+        'class' => "$bgColor $textColor $hoverColor $activeColor $activeText $hoverText inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-xs uppercase tracking-widest focus:outline-none  focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 active:scale-[1.01] shadow-md active:shadow-lg transition-all duration-150",
+    ]) }}>
     {{ $text }}
 </button>
+
 {{-- uage examples --}}
 {{-- <x-button text="Create Task" type="submit" /> --}}
 

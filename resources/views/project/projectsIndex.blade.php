@@ -1,6 +1,13 @@
 @extends('layout')
 @section('page-name', 'Tasks')
 
-@section('main')
-    Projects
-@endsection
+<ul>
+    @section('main')
+        @foreach ($projects as $project)
+            <li>
+                {{ $project->name }}
+            </li>
+        @endforeach
+
+    @endsection
+</ul>
